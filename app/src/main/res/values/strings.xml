@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">nativeShop</string>
+    <string name="intro_title">Welcome to <font color="#39C7A5">Digital Store</font>\n a Gateway to the Latest Tech</string>
+    <string name="into_subtitle">Sign in to explore a wide range of cutting-edge digital products. Don\'t have an yes? Register npw and enjoy a seamless and secure shopping experience</string>
+    <string name="intro_button">Let\'s Get Started!</string>
+    <string name="intro_already_have_account">Already have account? Sign In</string>
+</resources>
