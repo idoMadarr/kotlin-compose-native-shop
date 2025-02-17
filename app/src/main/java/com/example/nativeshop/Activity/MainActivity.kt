@@ -6,6 +6,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -27,6 +28,7 @@ import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -40,6 +42,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
@@ -124,9 +127,14 @@ fun MainScreen() {
         }
         Spacer(modifier = Modifier.height(12.dp))
         if (!isLoadingBanners && !isLoadingCategories && !isLoadingItems) {
-            BannersCarousel(bannersList)
-            CategoriesItems(categoriesList)
-            ListItems(itemsList)
+            Box(modifier = Modifier.fillMaxSize()) {
+                Column(modifier = Modifier.fillMaxSize()) {
+                    BannersCarousel(bannersList)
+                    CategoriesItems(categoriesList)
+                    ListItems(itemsList)
+                }
+                FloatingMenu(modifier = Modifier.align(Alignment.BottomCenter))
+            }
 
         } else {
             Column(
@@ -316,6 +324,47 @@ fun Item(item: ItemModel) {
                     color = colorResource(R.color.purple)
                 )
             }
+        }
+    }
+}
+
+@Composable
+fun FloatingMenuItem(text: String, icon: Painter, onItem: () -> Unit) {
+    Column(
+        modifier = Modifier
+            .height(60.dp)
+            .padding(8.dp)
+            .clickable { onItem() },
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Icon(icon, contentDescription = null, tint = Color.White)
+        Text(text, fontSize = 10.sp, color = Color.White)
+    }
+}
+
+@Composable
+fun FloatingMenu(modifier: Modifier) {
+    Box(modifier = modifier.fillMaxWidth()
+    ) {
+        Row(
+            modifier = Modifier
+                .height(120.dp)
+                .fillMaxWidth()
+                .padding(16.dp, 16.dp, 16.dp, 32.dp)
+                .background(
+                    color = colorResource(R.color.purple),
+                    shape = RoundedCornerShape(10.dp)
+                ),
+            horizontalArrangement = Arrangement.SpaceAround,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            FloatingMenuItem(icon = painterResource(R.drawable.btn_1), text = "Explorer", onItem = {})
+            FloatingMenuItem(icon = painterResource(R.drawable.btn_2), text = "Cart", onItem = {})
+            FloatingMenuItem(icon = painterResource(R.drawable.btn_3), text = "Favorite", onItem = {})
+            FloatingMenuItem(icon = painterResource(R.drawable.btn_4), text = "Orders", onItem = {})
+            FloatingMenuItem(icon = painterResource(R.drawable.btn_5), text = "Profile", onItem = {})
+
         }
     }
 }
